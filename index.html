@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base de Conhecimento - Inteligência Artificial | UDESC CEPLAN</title>
+    
+    <!-- =====================================================================
+         SEÇÃO 1: ESTILIZAÇÃO (CSS3)
+         Aqui aplicamos Variáveis CSS, Flexbox, CSS Grid e Responsividade
+    ====================================================================== -->
+    <style>
+        /* Variáveis de cores para manter padronização visual (Identidade UDESC/Tech) */
+        :root {
+            --cor-primaria: #005a32;      /* Verde institucional UDESC */
+            --cor-secundaria: #1e293b;    /* Azul escuro técnico */
+            --cor-fundo: #f8fafc;         /* Fundo claro para leitura */
+            --cor-card: #ffffff;
+            --cor-texto: #334155;
+            --cor-destaque: #10b981;
+        }
+
+        /* Reset básico e Modelo de Caixas (Box-Sizing) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            line-height: 1.6;
+        }
+
+        /* Cabeçalho utilizando Flexbox */
+        header {
+            background: linear-gradient(135deg, var(--cor-secundaria), var(--cor-primaria));
+            color: white;
+            padding: 2rem 5%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Barra de Navegação */
+        nav {
+            background-color: var(--cor-secundaria);
+            padding: 0.8rem;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        nav a:hover {
+            background-color: var(--cor-primaria);
+        }
+
+        /* Container Principal */
+        main {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+
+        /* Barra de Pesquisa Interativa */
+        .search-box {
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--cor-primaria);
+        }
+
+        /* Layout em Grid para os Cards da Base de Conhecimento */
+        .grid-conceitos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: var(--cor-card);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border-top: 4px solid var(--cor-primaria);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card .tag {
+            display: inline-block;
+            background: #e2e8f0;
+            color: var(--cor-secundaria);
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .card h3 {
+            color: var(--cor-secundaria);
+            margin-bottom: 10px;
+        }
+
+        /* Tabela Comparativa (Semântica HTML) */
+        .tabela-container {
+            overflow-x: auto;
+            margin-bottom: 3rem;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background-color: var(--cor-primaria);
+            color: white;
+        }
+
+        /* Seção Interativa: Mini-Quiz de Fixação */
+        .quiz-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid var(--cor-destaque);
+        }
+
+        .btn-opcao {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 10px 15px;
+            margin: 8px 0;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            background: #f1f5f9;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .btn-opcao:hover {
+            background: #e2e8f0;
+        }
+
+        #resultado-quiz {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: var(--cor-secundaria);
+            color: white;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- =====================================================================
+         SEÇÃO 2: ESTRUTURA SEMÂNTICA (HTML5)
+         Uso de <header>, <nav>, <main>, <section>, <article> e <footer>
+    ====================================================================== -->
+    <header>
+        <h1>Base de Conhecimento: Inteligência Artificial</h1>
+        <p>Sistemas de Informação • UDESC CEPLAN (Planalto Norte)</p>
+    </header>
+
+    <nav>
+        <a href="#conceitos">Conceitos Fundamentais</a>
+        <a href="#comparativo">Paradigmas de IA</a>
+        <a href="#quiz">Teste seus Conhecimentos</a>
+    </nav>
+
+    <main>
+        <!-- Filtro dinâmico controlado via JavaScript -->
+        <section class="search-box">
+            <input type="text" id="campoBusca" onkeyup="filtrarConteudo()" 
+                   placeholder="Pesquisar tópico (ex: Busca, Redes Neurais, Machine Learning, Agentes)...">
+        </section>
+
+        <!-- Cards de Conteúdo da Disciplina de IA -->
+        <section id="conceitos" class="grid-conceitos">
+            <article class="card">
+                <span class="tag">Fundamentos</span>
+                <h3>Agentes Inteligentes</h3>
+                <p>Entidades que percebem o ambiente por meio de sensores e agem sobre ele através de atuadores visando maximizar uma medida de desempenho.</p>
+            </article>
+
+            <article class="card">
+                <span class="tag">Resolução de Problemas</span>
+                <h3>Algoritmos de Busca</h3>
+                <p>Técnicas como Busca em Largura (BFS), Profundidade (DFS) e Busca A* (heurística) usadas para encontrar caminhos ótimos em espaços de estados.</p>
+            </article>
+
+            <article class="card">
+                <span class="tag">Aprendizado</span>
+                <h3>Machine Learning</h3>
+                <p>Subcampo da IA onde modelos aprendem padrões a partir de dados históricos sem serem explicitamente programados para cada regra.</p>
+            </article>
+
+            <article class="card">
+                <span class="tag">Deep Learning</span>
+                <h3>Redes Neurais Artificiais</h3>
+                <p>Estruturas inspiradas no cérebro humano (Perceptron, MLP) compostas por camadas de neurônios com pesos ajustados via Backpropagation.</p>
+            </article>
+
+            <article class="card">
+                <span class="tag">Lógica</span>
+                <h3>Representação do Conhecimento</h3>
+                <p>Uso de Lógica Proposicional, Lógica de Primeira Ordem e Sistemas Especialistas baseados em regras (SE-ENTÃO) para inferência.</p>
+            </article>
+
+            <article class="card">
+                <span class="tag">IA Moderna</span>
+                <h3>Processamento de Linguagem Natural</h3>
+                <p>Área focada na interação entre computadores e linguagem humana, base dos atuais Modelos de Linguagem (LLMs) e Transformers.</p>
+            </article>
+        </section>
+
+        <!-- Tabela Semântica exigida nos temas de HTML -->
+        <section id="comparativo" class="tabela-container">
+            <h2>Comparativo: Abordagens de Aprendizado de Máquina</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Paradigma</th>
+                        <th>Tipo de Dados</th>
+                        <th>Exemplo de Aplicação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Supervisionado</strong></td>
+                        <td>Dados rotulados (Entrada + Resposta esperada)</td>
+                        <td>Classificação de spam, previsão de preços</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Não Supervisionado</strong></td>
+                        <td>Dados não rotulados (Busca padrões ocultos)</td>
+                        <td>Segmentação de clientes (Clustering)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Por Reforço</strong></td>
+                        <td>Interação com ambiente (Recompensa e Punição)</td>
+                        <td>Jogos, robótica autônoma</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Componente Dinâmico com Eventos JS -->
+        <section id="quiz" class="quiz-box">
+            <h2>Desafio Rápido de IA</h2>
+            <p style="margin: 10px 0;">Qual algoritmo de busca utiliza uma função heurística <em>f(n) = g(n) + h(n)</em> para encontrar o caminho mais curto?</p>
+            
+            <button class="btn-opcao" onclick="verificarResposta(false)">A) Busca em Profundidade (DFS)</button>
+            <button class="btn-opcao" onclick="verificarResposta(true)">B) Algoritmo A* (A-Estrela)</button>
+            <button class="btn-opcao" onclick="verificarResposta(false)">C) Regressão Linear</button>
+
+            <p id="resultado-quiz"></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>Desenvolvido por Vitor Lichtblau Neitzke • Atividade Avaliativa - Desenvolvimento Web II</p>
+        <p>UDESC - Centro de Educação do Planalto Norte (CEPLAN)</p>
+    </footer>
+
+    <!-- =====================================================================
+         SEÇÃO 3: INTERATIVIDADE (JAVASCRIPT)
+         Manipulação do DOM e Eventos
+    ====================================================================== -->
+    <script>
+        // Função 1: Filtro dinâmico em tempo real nos cards (Manipulação do DOM)
+        function filtrarConteudo() {
+            const termo = document.getElementById('campoBusca').value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+
+            cards.forEach(card => {
+                const textoCard = card.innerText.toLowerCase();
+                if (textoCard.includes(termo)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Função 2: Validação de resposta do Quiz (Eventos e Feedback visual)
+        function verificarResposta(correta) {
+            const feedback = document.getElementById('resultado-quiz');
+            if (correta) {
+                feedback.style.color = '#005a32';
+                feedback.innerText = '✅ Correto! O algoritmo A* combina o custo real g(n) com a estimativa heurística h(n).';
+            } else {
+                feedback.style.color = '#dc2626';
+                feedback.innerText = '❌ Incorreto. Tente novamente! Dica: envolve busca heurística informada.';
+            }
+        }
+    </script>
+</body>
+</html>
